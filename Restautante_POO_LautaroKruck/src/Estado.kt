@@ -1,0 +1,3 @@
+enum class Estado {
+    PENDIENTE, PREPARACION, LISTO, SERVIDO
+}
