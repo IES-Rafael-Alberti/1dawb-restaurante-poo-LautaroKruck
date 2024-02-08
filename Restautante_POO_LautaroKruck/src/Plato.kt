@@ -7,17 +7,25 @@ class Plato(var nombre: String, var precio: Double, var tiempoPreparacion: Int, 
 
     }
 
-    /*
-    agregarIngrediente(ingrediente: String): Añade un nuevo ingrediente a la lista de ingredientes del plato.
-    toString(): Retornar la información del plato (por ejemplo, "Hamburguesa (8 min.) -> 8.99€ (carne, huevo, queso, pan y tomate)")
-     */
-    fun agregarIngrediente(ingrediente: String): MutableList<String> {
+    fun agregarIngrediente(ingrediente: String) {
+        require(ingrediente.trim().isNotEmpty()) { "El ingrediente no puede estar vacío." }
+        ingredientes.add(ingrediente)
+    }
 
-        ingredientes
-        return ingredientes
+    private fun formatIngredientes(): String {
+        var listaIngredientes = ""
+        for (i in ingredientes.indices) {
+            listaIngredientes += when {
+                i == ingredientes.size - 1 && ingredientes.size > 1 -> " y ${ingredientes[i]}"
+                i == ingredientes.size - 2 -> ingredientes[i]
+                else -> "${ingredientes[i]}, "
+            }
+        }
+        return listaIngredientes
     }
 
     override fun toString(): String {
-        return "$nombre ($tiempoPreparacion min.) -> $precio€ $ingredientes"
+        val listaIngredientes = formatIngredientes()
+        return "$nombre ($tiempoPreparacion min.) -> $precio€ ($listaIngredientes)"
     }
 }

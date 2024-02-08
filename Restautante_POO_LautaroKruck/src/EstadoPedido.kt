@@ -1,3 +1,3 @@
-enum class Estado {
+enum class EstadoPedido {
     PENDIENTE, PREPARACION, LISTO, SERVIDO
 }

@@ -1,14 +1,16 @@
-class Pedido (private val platos: List<Plato>, val estado: Estado = Estado.PENDIENTE){
+class Pedido (val platos: MutableList<Plato> = mutableListOf(),  var estado: EstadoPedido = EstadoPedido.PENDIENTE){
     val numero = ++numeroPedido
     companion object {
         var numeroPedido = 0
     }
 
-    fun agregarPlato(plato: Plato){
-
+    fun agregarPlato(plato: Plato) {
+        platos.add(plato)
     }
-    fun eliminarPlato(): String
-
+    fun eliminarPlato(nombrePlato: String): Boolean {
+        val platoAEliminar = platos.find { it.nombre == nombrePlato }
+        return platoAEliminar?.let { platos.remove(it) } ?: false
+    }
 
     fun calcularPrecio(): Double {
         var precioTotal = 0.00
@@ -26,7 +28,7 @@ class Pedido (private val platos: List<Plato>, val estado: Estado = Estado.PENDI
     }
 
     override fun toString(): String {
-        return """ """
-
+        val Platos = platos.joinToString(separator = "\n") { it.toString() }
+        return "$Platos \nEstado: ${estado.name.lowercase()} \nTotal: ${calcularPrecio()}€, Tiempo: ${calcularTiempo()} min."
     }
 }
